@@ -134,14 +134,14 @@ class ClickCounter {
 
 ### current 树及 workInProgress 树
 
-在第一次渲染之后，React 最终得到一个 Fiber 树，它反映了用于渲染 UI 的应用程序的状态。这棵树通常被称为 **current 树（当前树）**。当 React 开始处理更新时，它会构建一个所谓的 **workInProgress 树（工作过程树）**，它反映了要刷新到屏幕的未来状态。<br />所有工作都在 `workInProgress` 树的 Fiber 节点上执行。当 React 遍历 `current` 树时，对于每个现有 Fiber 节点，React 会创建一个构成 `workInProgress` 树的备用节点，这一节点会使用 render 方法返回的 React 元素中的数据来创建。处理完更新并完成所有相关工作后，React 将准备好一个备用树以刷新到屏幕。一旦这个 `workInProgress` 树在屏幕上呈现，它就会变成 `current`树。<br />React 的核心原则之一是一致性。 React 总是一次性更新 DOM - 它不会显示部分中间结果。`workInProgress` 树充当用户不可见的「草稿」，这样 React 可以先处理所有组件，然后将其更改刷新到屏幕。<br />在源代码中，您将看到很多函数从 `current` 和 `workInProgress` 树中获取 Fiber 节点。这是一个这类函数的签名：
+在第一次渲染之后，React 最终得到一个 Fiber 树，它反映了用于渲染 UI 的应用程序的状态。这棵树通常被称为 **current 树（当前树）**。当 React 开始处理更新时，它会构建一个所谓的 **workInProgress 树（工作过程树）**，它反映了要刷新到屏幕的未来状态。<br />所有工作都在 `workInProgress` 树的 Fiber 节点上执行。当 React 遍历 `current` 树时，对于每个现有 Fiber 节点，React 会创建一个构成 `workInProgress` 树的`alternate`（备用）节点，这一节点会使用 render 方法返回的 React 元素中的数据来创建。处理完更新并完成所有相关工作后，React 将准备好一个备用树以刷新到屏幕。一旦这个 `workInProgress` 树在屏幕上呈现，它就会变成 `current`树。<br />React 的核心原则之一是一致性。 React 总是一次性更新 DOM - 它不会显示部分中间结果。`workInProgress` 树充当用户不可见的「草稿」，这样 React 可以先处理所有组件，然后将其更改刷新到屏幕。<br />在源代码中，您将看到很多函数从 `current` 和 `workInProgress` 树中获取 Fiber 节点。这是一个这类函数的签名：
 
 ```js
 function updateHostComponent(current, workInProgress, renderExpirationTime) {...}
 
 ```
 
-每个Fiber节点持有`备用`域在另一个树的对应部分的引用。来自 `current` 树中的节点会指向 `workInProgress` 树中的节点，反之亦然。
+每个Fiber节点持有`alternate`（备用）域在另一个树的对应部分的引用。来自 `current` 树中的节点会指向 `workInProgress` 树中的节点，反之亦然。
 
 ### 副作用
 
@@ -204,14 +204,7 @@ compInstance._reactInternalFiber
 
 ```js
 {
-    stateNode: {
-        type: "span",
-        props: {
-            children: 0
-        },
-        isHidden: false,
-        // ...
-    },
+    stateNode: new HTMLSpanElement,
     type: "span",
     alternate: null,
     key: "2",
