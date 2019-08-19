@@ -204,15 +204,26 @@ compInstance._reactInternalFiber
 
 ```js
 {
-    stateNode: new ClickCounter,
-    type: ClickCounter,
+    stateNode: {
+        type: "span",
+        props: {
+            children: 0
+        },
+        isHidden: false,
+        // ...
+    },
+    type: "span",
     alternate: null,
-    key: null,
+    key: "2",
     updateQueue: null,
-    memoizedState: {count: 0},
-    pendingProps: {},
-    memoizedProps: {},
-    tag: 1,
+    memoizedState: null,
+    pendingProps: {
+        children: 0
+    },
+    memoizedProps: {
+        children: 0
+    },
+    tag: 5,
     effectTag: 0,
     nextEffect: null
 }
